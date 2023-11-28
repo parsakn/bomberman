@@ -14,6 +14,9 @@ public:
     sf::Sprite getbombsprite(){
         return bombsprite;
     }
+    sf::Clock timer;
+    float elapsedSeconds;
+
 
 private:
     sf::RenderWindow* mainWindow;

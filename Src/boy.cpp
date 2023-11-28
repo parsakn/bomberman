@@ -103,11 +103,16 @@ void Boy::update()
 {
     handleMovement();
     checkBounds();
+    for (int i = 0; i < bombs.size(); ++i) {
+        bombs[i]->update();
+        if (bombs[i]->elapsedSeconds >= 2){
+            delete bombs[i];
+            bombs.erase(bombs.begin() + i);
+        }
+    }
     boyPosition += boyVelocity;
     boySprite.setPosition(boyPosition);
     boySprite.setScale(static_cast<float>(gridSize) / this->rightTexture.getSize().x,
                        static_cast<float>(gridSize) / this->rightTexture.getSize().y);
-    for (int i = 0; i < bombs.size(); ++i) {
-        bombs[i]->update();
-    }
+
 }

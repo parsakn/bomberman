@@ -80,12 +80,11 @@ void Game::render()
         }
     }
     window.draw(boy->getboysprite());
-    for (int i = 0; i < boy->bombs.size(); ++i) {
-         window.draw(boy->bombs[i]->getbombsprite());
+    for (auto & bomb : boy->bombs) {
+         window.draw(bomb->getbombsprite());
     }
 
 
-    //boy->render();
     window.display();
 
 }
