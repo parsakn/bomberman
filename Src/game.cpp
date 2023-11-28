@@ -8,6 +8,7 @@ Game::Game() :
         numTilesY(windowHeight/gridSize)   // Replace this with your desired number of tiles
 {
     window.create(sf::VideoMode(500, 500), "Game Window");
+    window.setFramerateLimit(60);
     loadTextures();
     createSprites();
     boy = new Boy(&window);

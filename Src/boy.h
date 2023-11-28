@@ -3,6 +3,8 @@
 #define P5SFML_BOY_H
 #include <SFML/Graphics.hpp>
 #include "manual.h"
+#include "bomb.h"
+#include <vector>
 
 class Boy
 {
@@ -24,6 +26,8 @@ private:
     sf::Texture upTexture;
     sf::Texture rightTexture;
     sf::Texture leftTexture;
+    std::vector<Bomb*> bombs;
+
 
 };
 

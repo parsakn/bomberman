@@ -11,7 +11,9 @@ add_executable(P5SFML Src/main.cpp
         Src/manual.h
         Src/boy.h
         Src/game.cpp
-        Src/boy.cpp)
+        Src/boy.cpp
+        Src/bomb.h
+        Src/bomb.cpp)
 target_link_libraries(P5SFML
         sfml-graphics
         sfml-window

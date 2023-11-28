@@ -4,7 +4,7 @@
 
 Boy::Boy(sf::RenderWindow* window) :
         mainWindow(window),
-        boySpeed(0.1f),
+        boySpeed(2.0f),
         boyVelocity(0, 0),
         boyPosition(0, 0)
 
@@ -18,8 +18,27 @@ Boy::Boy(sf::RenderWindow* window) :
 }
 
 
-void Boy::handleMovement()
-{
+sf::Vector2f bombposfixer(sf::Vector2f boyposition){
+    boyposition.x = boyposition.x + (gridSize/2);
+    boyposition.y = boyposition.y + (gridSize/2);
+    float bombpositionx = boyposition.x - ( static_cast<int>(boyposition.x) % gridSize );
+    float bombpositiony = boyposition.y - ( static_cast<int>(boyposition.y) % gridSize );
+
+    return sf::Vector2f(bombpositionx,bombpositiony);
+
+
+}
+
+
+void Boy::handleMovement() {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::X))
+    {
+        bombs.push_back(new Bomb(mainWindow,bombposfixer(boyPosition)));
+        boyVelocity.x = 0;
+        boyVelocity.y = 0;
+    }
+
+
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
     {
         boyVelocity.y = -boySpeed;
@@ -53,7 +72,7 @@ void Boy::handleMovement()
 
 void Boy::checkBounds()
 {
-    //parsakn
+
     if (boyPosition.x < 0)
     {
         boyPosition.x = 0;
@@ -90,5 +109,8 @@ void Boy::render()
     boySprite.setScale(static_cast<float>(gridSize) / this->rightTexture.getSize().x,
                        static_cast<float>(gridSize) / this->rightTexture.getSize().y);
     boySprite.setPosition(boyPosition);
+    for (int i = 0; i < bombs.size(); ++i) {
+        bombs[i]->render();
+    }
     mainWindow->draw(boySprite);
 }
