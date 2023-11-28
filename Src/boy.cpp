@@ -53,6 +53,7 @@ void Boy::handleMovement()
 
 void Boy::checkBounds()
 {
+    //parsakn
     if (boyPosition.x < 0)
     {
         boyPosition.x = 0;
