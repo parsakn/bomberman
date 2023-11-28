@@ -10,11 +10,9 @@ mainWindow(window)
     bombsprite.setTexture(bombtexture);
 }
 
-
-void Bomb::render()
-{
+void Bomb::update() {
     bombsprite.setScale(static_cast<float>(gridSize) / this->bombtexture.getSize().x,
-                       static_cast<float>(gridSize) / this->bombtexture.getSize().y);
+                        static_cast<float>(gridSize) / this->bombtexture.getSize().y);
     bombsprite.setPosition(bombposition);
-    mainWindow->draw(bombsprite);
 }
+

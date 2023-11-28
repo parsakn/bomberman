@@ -79,6 +79,13 @@ void Game::render()
             window.draw(backgroundSprite);
         }
     }
-    boy->render();
+    window.draw(boy->getboysprite());
+    for (int i = 0; i < boy->bombs.size(); ++i) {
+         window.draw(boy->bombs[i]->getbombsprite());
+    }
+
+
+    //boy->render();
     window.display();
+
 }

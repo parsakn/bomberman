@@ -29,6 +29,9 @@ sf::Vector2f bombposfixer(sf::Vector2f boyposition){
 
 }
 
+sf::Sprite Boy::getboysprite(){
+    return boySprite;
+}
 
 void Boy::handleMovement() {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::X))
@@ -102,15 +105,9 @@ void Boy::update()
     checkBounds();
     boyPosition += boyVelocity;
     boySprite.setPosition(boyPosition);
-}
-
-void Boy::render()
-{
     boySprite.setScale(static_cast<float>(gridSize) / this->rightTexture.getSize().x,
                        static_cast<float>(gridSize) / this->rightTexture.getSize().y);
-    boySprite.setPosition(boyPosition);
     for (int i = 0; i < bombs.size(); ++i) {
-        bombs[i]->render();
+        bombs[i]->update();
     }
-    mainWindow->draw(boySprite);
 }

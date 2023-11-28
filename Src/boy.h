@@ -11,10 +11,13 @@ class Boy
 public:
     Boy(sf::RenderWindow* Window);
 
+
+    sf::Sprite getboysprite();
     void handleMovement();
     void checkBounds();
     void update();
-    void render();
+    std::vector<Bomb*> bombs;
+
 
 private:
     sf::RenderWindow* mainWindow;
@@ -26,7 +29,7 @@ private:
     sf::Texture upTexture;
     sf::Texture rightTexture;
     sf::Texture leftTexture;
-    std::vector<Bomb*> bombs;
+
 
 
 };

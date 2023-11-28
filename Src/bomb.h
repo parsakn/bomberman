@@ -9,8 +9,11 @@
 class Bomb{
 public:
     Bomb(sf::RenderWindow* Windows,sf::Vector2f bombposition);
-    void render();
 
+    void update();
+    sf::Sprite getbombsprite(){
+        return bombsprite;
+    }
 
 private:
     sf::RenderWindow* mainWindow;
