@@ -1,13 +1,14 @@
 #include "game.h"
 #include "manual.h"
 #include "boy.h"
+#include "box.h"
 
 
 Game::Game() :
         numTilesX(windowWidth/gridSize),  // Replace this with your desired number of tiles
         numTilesY(windowHeight/gridSize)   // Replace this with your desired number of tiles
 {
-    window.create(sf::VideoMode(500, 500), "Game Window");
+    window.create(sf::VideoMode(windowWidth, windowHeight), "Game Window");
     window.setFramerateLimit(60);
     loadTextures();
     createSprites();

@@ -20,6 +20,7 @@ public:
 
 
 private:
+
     sf::RenderWindow* mainWindow;
     const float boySpeed;
     sf::Vector2f boyVelocity;

@@ -13,7 +13,9 @@ add_executable(P5SFML Src/main.cpp
         Src/game.cpp
         Src/boy.cpp
         Src/bomb.h
-        Src/bomb.cpp)
+        Src/bomb.cpp
+        Src/box.h
+        Src/box.cpp)
 
 
 target_link_libraries(P5SFML
