@@ -8,7 +8,9 @@
 
 class Box{
 public:
-    Box(sf::Vector2f position,int type);
+    Box(sf::Vector2f position,int type,float tilesize);
+    sf::Sprite get_box_sprite();
+    void fixsprite();
 
 
 private:

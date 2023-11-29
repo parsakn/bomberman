@@ -10,7 +10,7 @@
 
 const int windowWidth = 500;
 const int windowHeight = 500;
-const int gridSize = 25;
+
 
 const std::string BOYUPMOVEADD = "/home/parsa/CLionProjects/P5SFML/Sprites/boy/up.png";
 const std::string BOYDOWNMOVEADD = "/home/parsa/CLionProjects/P5SFML/Sprites/boy/down-stay.png";

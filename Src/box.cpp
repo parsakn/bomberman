@@ -2,7 +2,7 @@
 #include "box.h"
 
 
-Box::Box(sf::Vector2f position,int boxtype)
+Box::Box(sf::Vector2f position,int boxtype,float tileSize)
 
 {
     boxposition = position;
@@ -12,5 +12,14 @@ Box::Box(sf::Vector2f position,int boxtype)
         boxtextuture.loadFromFile(BOXT2ADD);
     }
     boxsprite.setTexture(boxtextuture);
+    boxsprite.setScale(static_cast<float>(tileSize) / boxtextuture.getSize().x,
+                       static_cast<float>(tileSize) / boxtextuture.getSize().y);
+
     type = boxtype;
+}
+
+
+sf::Sprite Box::get_box_sprite() {return boxsprite;}
+void Box::fixsprite() {
+    boxsprite.setPosition(boxposition);
 }

@@ -6,6 +6,7 @@
 #include "boy.h"
 #include "manual.h"
 #include "vector"
+#include "box.h"
 
 
 class Game
@@ -17,6 +18,7 @@ public:
     void run();
 
 private:
+    void readmapinfo();
     void loadTextures();
     void createSprites();
     void handleEvents();
@@ -31,6 +33,7 @@ private:
     int numTilesY;
     int tileSize;
     std::vector<std::vector<char>> map;
+    std::vector<Box*> boxes;
 };
 
 

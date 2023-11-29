@@ -16,11 +16,26 @@ Game::Game(std::vector<std::vector<char>> Gamemap) :
     loadTextures();
     createSprites();
     boy = new Boy(tileSize);
+    readmapinfo();
 }
 
 Game::~Game()
 {
     delete boy;
+}
+
+void Game::readmapinfo() {
+
+    for (int i = 0; i < map.size(); ++i) {
+        for (int j = 0; j < map[i].size(); ++j) {
+            if (map[i][j] == 'B'){
+                boxes.push_back(new Box(sf::Vector2f(j * tileSize,i * tileSize),1,tileSize));
+            }
+            if (map[i][j] == 'P'){
+                boxes.push_back(new Box(sf::Vector2f(j * tileSize,i * tileSize),2,tileSize));
+            }
+        }
+    }
 }
 
 void Game::run()
@@ -82,6 +97,11 @@ void Game::render()
             backgroundSprite.setPosition(static_cast<float>(x * tileSize), static_cast<float>(y * tileSize));
             window.draw(backgroundSprite);
         }
+    }
+
+    for (int i = 0; i < boxes.size(); ++i) {
+        boxes[i]->fixsprite();
+        window.draw(boxes[i]->get_box_sprite());
     }
 
     for (auto & bomb : boy->bombs) {
