@@ -2,8 +2,8 @@
 #include "manual.h"
 
 
-Boy::Boy(sf::RenderWindow* window) :
-        mainWindow(window),
+Boy::Boy(float tilesSize) :
+        tileSize(tilesSize),
         boySpeed(2.0f),
         boyVelocity(0, 0),
         boyPosition(0, 0)
@@ -18,11 +18,11 @@ Boy::Boy(sf::RenderWindow* window) :
 }
 
 
-sf::Vector2f bombposfixer(sf::Vector2f boyposition){
-    boyposition.x = boyposition.x + (gridSize/2);
-    boyposition.y = boyposition.y + (gridSize/2);
-    float bombpositionx = boyposition.x - ( static_cast<int>(boyposition.x) % gridSize );
-    float bombpositiony = boyposition.y - ( static_cast<int>(boyposition.y) % gridSize );
+sf::Vector2f Boy::bombposfixer(sf::Vector2f boyposition){
+    boyposition.x = boyposition.x + (tileSize/2);
+    boyposition.y = boyposition.y + (tileSize/2);
+    float bombpositionx = boyposition.x - ( static_cast<int>(boyposition.x) % static_cast<int>(tileSize) );
+    float bombpositiony = boyposition.y - ( static_cast<int>(boyposition.y) % static_cast<int>(tileSize) );
 
     return sf::Vector2f(bombpositionx,bombpositiony);
 
@@ -36,7 +36,7 @@ sf::Sprite Boy::getboysprite(){
 void Boy::handleMovement() {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::X))
     {
-        bombs.push_back(new Bomb(mainWindow,bombposfixer(boyPosition)));
+        bombs.push_back(new Bomb(bombposfixer(boyPosition),tileSize));
         boyVelocity.x = 0;
         boyVelocity.y = 0;
     }
@@ -81,9 +81,9 @@ void Boy::checkBounds()
         boyPosition.x = 0;
         boyVelocity.x = 0;
     }
-    else if (boyPosition.x > windowWidth - gridSize)
+    else if (boyPosition.x > windowWidth - tileSize)
     {
-        boyPosition.x = windowWidth - gridSize;
+        boyPosition.x = windowWidth - tileSize;
         boyVelocity.x = 0;
     }
 
@@ -92,9 +92,9 @@ void Boy::checkBounds()
         boyPosition.y = 0;
         boyVelocity.y = 0;
     }
-    else if (boyPosition.y > windowHeight - gridSize)
+    else if (boyPosition.y > windowHeight - tileSize)
     {
-        boyPosition.y = windowHeight - gridSize;
+        boyPosition.y = windowHeight - tileSize;
         boyVelocity.y = 0;
     }
 }
@@ -112,7 +112,7 @@ void Boy::update()
     }
     boyPosition += boyVelocity;
     boySprite.setPosition(boyPosition);
-    boySprite.setScale(static_cast<float>(gridSize) / this->rightTexture.getSize().x,
-                       static_cast<float>(gridSize) / this->rightTexture.getSize().y);
+    boySprite.setScale(static_cast<float>(tileSize) / this->rightTexture.getSize().x,
+                       static_cast<float>(tileSize) / this->rightTexture.getSize().y);
 
 }

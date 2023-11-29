@@ -8,7 +8,7 @@
 
 class Bomb{
 public:
-    Bomb(sf::RenderWindow* Windows,sf::Vector2f bombposition);
+    Bomb(sf::Vector2f bombposition,float tileSize);
 
     void update();
     sf::Sprite getbombsprite(){
@@ -19,10 +19,11 @@ public:
 
 
 private:
-    sf::RenderWindow* mainWindow;
+
     sf::Vector2f bombposition;
     sf::Sprite bombsprite;
     sf::Texture bombtexture;
+    float tileSize;
 
 };
 

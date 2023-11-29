@@ -9,19 +9,20 @@
 class Boy
 {
 public:
-    Boy(sf::RenderWindow* Window);
+    Boy(float tilesSize);
 
 
     sf::Sprite getboysprite();
     void handleMovement();
     void checkBounds();
     void update();
+    sf::Vector2f bombposfixer(sf::Vector2f boyposition);
     std::vector<Bomb*> bombs;
 
 
 private:
 
-    sf::RenderWindow* mainWindow;
+    float tileSize;
     const float boySpeed;
     sf::Vector2f boyVelocity;
     sf::Vector2f boyPosition;

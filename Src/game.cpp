@@ -4,15 +4,18 @@
 #include "box.h"
 
 
-Game::Game() :
-        numTilesX(windowWidth/gridSize),  // Replace this with your desired number of tiles
-        numTilesY(windowHeight/gridSize)   // Replace this with your desired number of tiles
+Game::Game(std::vector<std::vector<char>> Gamemap) :
+        map(Gamemap)
+
 {
     window.create(sf::VideoMode(windowWidth, windowHeight), "Game Window");
     window.setFramerateLimit(60);
+    numTilesX = static_cast<int> (map.size());
+    numTilesY = static_cast<int> (map.size());
+    tileSize = windowHeight / numTilesX ;
     loadTextures();
     createSprites();
-    boy = new Boy(&window);
+    boy = new Boy(tileSize);
 }
 
 Game::~Game()
@@ -34,18 +37,18 @@ void Game::loadTextures()
 {
     if (!backgroundTexture.loadFromFile(BACKGROUNDADD))
     {
-        // Handle texture loading error
+
         window.close();
     }
 
-    // Load other textures as needed
+
 }
 
 void Game::createSprites()
 {
     backgroundSprite.setTexture(backgroundTexture);
-    backgroundSprite.setScale(static_cast<float>(gridSize) / backgroundTexture.getSize().x,
-                              static_cast<float>(gridSize) / backgroundTexture.getSize().y);
+    backgroundSprite.setScale(static_cast<float>(tileSize) / backgroundTexture.getSize().x,
+                              static_cast<float>(tileSize) / backgroundTexture.getSize().y);
 
 }
 
@@ -76,7 +79,7 @@ void Game::render()
     {
         for (int y = 0; y < numTilesY; y++)
         {
-            backgroundSprite.setPosition(static_cast<float>(x * gridSize), static_cast<float>(y * gridSize));
+            backgroundSprite.setPosition(static_cast<float>(x * tileSize), static_cast<float>(y * tileSize));
             window.draw(backgroundSprite);
         }
     }

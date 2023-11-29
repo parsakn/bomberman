@@ -5,12 +5,13 @@
 #include <SFML/Graphics.hpp>
 #include "boy.h"
 #include "manual.h"
+#include "vector"
 
 
 class Game
 {
 public:
-    Game();
+    Game(std::vector<std::vector<char>> map);
     ~Game();
 
     void run();
@@ -26,8 +27,10 @@ private:
     sf::Texture backgroundTexture;
     sf::Sprite backgroundSprite;
     Boy* boy;
-    const int numTilesX;
-    const int numTilesY;
+    int numTilesX;
+    int numTilesY;
+    int tileSize;
+    std::vector<std::vector<char>> map;
 };
 
 

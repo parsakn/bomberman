@@ -2,9 +2,10 @@
 #include "bomb.h"
 
 
-Bomb::Bomb(sf::RenderWindow* window,sf::Vector2f bombpos) :
-mainWindow(window)
+Bomb::Bomb(sf::Vector2f bombpos,float tilesSize)
+
 {
+    tileSize = tilesSize;
     elapsedSeconds = 0;
     bombposition = bombpos;
     bombtexture.loadFromFile(BOMBADD);
@@ -13,8 +14,8 @@ mainWindow(window)
 
 void Bomb::update() {
     elapsedSeconds = timer.getElapsedTime().asSeconds();
-    bombsprite.setScale(static_cast<float>(gridSize) / this->bombtexture.getSize().x,
-                        static_cast<float>(gridSize) / this->bombtexture.getSize().y);
+    bombsprite.setScale((tileSize) / this->bombtexture.getSize().x,
+                        (tileSize) / this->bombtexture.getSize().y);
     bombsprite.setPosition(bombposition);
 
 }
