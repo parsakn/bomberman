@@ -79,10 +79,12 @@ void Game::render()
             window.draw(backgroundSprite);
         }
     }
-    window.draw(boy->getboysprite());
+
     for (auto & bomb : boy->bombs) {
          window.draw(bomb->getbombsprite());
     }
+
+    window.draw(boy->getboysprite());
 
 
     window.display();
