@@ -2,7 +2,7 @@
 #include "manual.h"
 
 
-Boy::Boy(float tilesSize) :
+Boy::Boy(float tilesSize,std::vector<Box*> boxes_b) :
         tileSize(tilesSize),
         boySpeed(2.0f),
         boyVelocity(0, 0),
@@ -10,6 +10,7 @@ Boy::Boy(float tilesSize) :
 
 
 {
+    boxes = boxes_b;
     downTexture.loadFromFile(BOYDOWNMOVEADD);
     upTexture.loadFromFile(BOYUPMOVEADD);
     rightTexture.loadFromFile(BOYRIGHTMOVEADD);
@@ -36,9 +37,12 @@ sf::Sprite Boy::getboysprite(){
 void Boy::handleMovement() {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::X))
     {
+
         bombs.push_back(new Bomb(bombposfixer(boyPosition),tileSize));
         boyVelocity.x = 0;
         boyVelocity.y = 0;
+
+
     }
 
 
@@ -97,22 +101,65 @@ void Boy::checkBounds()
         boyPosition.y = windowHeight - tileSize;
         boyVelocity.y = 0;
     }
-}
 
-void Boy::update()
-{
-    handleMovement();
-    checkBounds();
-    for (int i = 0; i < bombs.size(); ++i) {
-        bombs[i]->update();
-        if (bombs[i]->elapsedSeconds >= 2){
-            delete bombs[i];
-            bombs.erase(bombs.begin() + i);
-        }
-    }
-    boyPosition += boyVelocity;
-    boySprite.setPosition(boyPosition);
-    boySprite.setScale(static_cast<float>(tileSize) / this->rightTexture.getSize().x,
-                       static_cast<float>(tileSize) / this->rightTexture.getSize().y);
+    for (const auto& box : boxes) {
+        // Assuming each box has position and size properties
+        float boxLeft = box->get_box_position().x;
+        float boxRight = box->get_box_position().x + tileSize;
+        float boxTop = box->get_box_position().y;
+        float boxBottom = box->get_box_position().y + tileSize;
+
+        float overlapX = std::min(boyPosition.x + tileSize, boxRight) - std::max(boyPosition.x, boxLeft);
+        float overlapY = std::min(boyPosition.y + tileSize, boxBottom) - std::max(boyPosition.y, boxTop);
+
+
+        if (boyPosition.x < boxRight && boyPosition.x + tileSize > boxLeft &&
+            boyPosition.y < boxBottom && boyPosition.y + tileSize > boxTop) {
+            // Collision with a box, prevent boy from moving into it
+            if (overlapX < overlapY)
+            {
+                // Resolve in the X direction
+                if (boyVelocity.x > 0)
+                {
+                    boyPosition.x = boxLeft - tileSize -1.5;
+                }
+                else if (boyVelocity.x < 0)
+                {
+                    boyPosition.x = boxRight + 1.5;
+                }
+                boyVelocity.x = 0;
+            }
+            else
+            {
+                // Resolve in the Y direction
+                if (boyVelocity.y > 0)
+                {
+                    boyPosition.y = boxTop - tileSize - 1.5;
+                }
+                else if (boyVelocity.y < 0)
+                {
+                    boyPosition.y = boxBottom + 1.5;
+                }
+                boyVelocity.y = 0;
+            }
+    }}}
+
+
+void Boy::update() {
+      handleMovement();
+      checkBounds();
+            for (int i = 0; i < bombs.size(); ++i) {
+                bombs[i]->update();
+                if (bombs[i]->elapsedSeconds >= 2) {
+                    delete bombs[i];
+                    bombs.erase(bombs.begin() + i);
+                }
+            }
+
+            boyPosition += sf::Vector2f(static_cast<float>(boyVelocity.x), static_cast<int>(boyVelocity.y));
+
+            boySprite.setPosition(boyPosition);
+            boySprite.setScale(static_cast<float>(tileSize) / this->rightTexture.getSize().x,
+                               static_cast<float>(tileSize) / this->rightTexture.getSize().y);
 
 }

@@ -10,6 +10,7 @@ class Box{
 public:
     Box(sf::Vector2f position,int type,float tilesize);
     sf::Sprite get_box_sprite();
+    sf::Vector2f get_box_position();
     void fixsprite();
 
 

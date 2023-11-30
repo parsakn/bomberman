@@ -15,8 +15,8 @@ Game::Game(std::vector<std::vector<char>> Gamemap) :
     tileSize = windowHeight / numTilesX ;
     loadTextures();
     createSprites();
-    boy = new Boy(tileSize);
     readmapinfo();
+    boy = new Boy(tileSize, boxes);
 }
 
 Game::~Game()

@@ -20,6 +20,7 @@ Box::Box(sf::Vector2f position,int boxtype,float tileSize)
 
 
 sf::Sprite Box::get_box_sprite() {return boxsprite;}
+sf::Vector2f Box::get_box_position() {return boxposition;}
 void Box::fixsprite() {
     boxsprite.setPosition(boxposition);
 }
