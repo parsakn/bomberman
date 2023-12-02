@@ -22,6 +22,7 @@ private:
     void loadTextures();
     void createSprites();
     void handleEvents();
+    void checkboyandboxescoll();
     void update();
     void render();
 

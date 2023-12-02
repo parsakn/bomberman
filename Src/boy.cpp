@@ -77,72 +77,57 @@ void Boy::handleMovement() {
     }
 }
 
-void Boy::checkBounds()
-{
+void Boy::checkBounds() {
 
-    if (boyPosition.x < 0)
-    {
+    if (boyPosition.x < 0) {
         boyPosition.x = 0;
         boyVelocity.x = 0;
-    }
-    else if (boyPosition.x > windowWidth - tileSize)
-    {
+    } else if (boyPosition.x > windowWidth - tileSize) {
         boyPosition.x = windowWidth - tileSize;
         boyVelocity.x = 0;
     }
 
-    if (boyPosition.y < 0)
-    {
+    if (boyPosition.y < 0) {
         boyPosition.y = 0;
         boyVelocity.y = 0;
-    }
-    else if (boyPosition.y > windowHeight - tileSize)
-    {
+    } else if (boyPosition.y > windowHeight - tileSize) {
         boyPosition.y = windowHeight - tileSize;
         boyVelocity.y = 0;
     }
 
-    for (const auto& box : boxes) {
-        // Assuming each box has position and size properties
-        float boxLeft = box->get_box_position().x;
-        float boxRight = box->get_box_position().x + tileSize;
-        float boxTop = box->get_box_position().y;
-        float boxBottom = box->get_box_position().y + tileSize;
-
-        float overlapX = std::min(boyPosition.x + tileSize, boxRight) - std::max(boyPosition.x, boxLeft);
-        float overlapY = std::min(boyPosition.y + tileSize, boxBottom) - std::max(boyPosition.y, boxTop);
+    for (int i = 0; i < boxes.size(); ++i) {
+       sf::FloatRect boy_r = boySprite.getGlobalBounds();
+       sf::FloatRect box_r = boxes[i]->get_box_sprite().getGlobalBounds();
 
 
-        if (boyPosition.x < boxRight && boyPosition.x + tileSize > boxLeft &&
-            boyPosition.y < boxBottom && boyPosition.y + tileSize > boxTop) {
-            // Collision with a box, prevent boy from moving into it
-            if (overlapX < overlapY)
-            {
-                // Resolve in the X direction
-                if (boyVelocity.x > 0)
-                {
-                    boyPosition.x = boxLeft - tileSize -1.5;
-                }
-                else if (boyVelocity.x < 0)
-                {
-                    boyPosition.x = boxRight + 1.5;
-                }
-                boyVelocity.x = 0;
-            }
-            else
-            {
-                // Resolve in the Y direction
-                if (boyVelocity.y > 0)
-                {
-                    boyPosition.y = boxTop - tileSize - 1.5;
-                }
-                else if (boyVelocity.y < 0)
-                {
-                    boyPosition.y = boxBottom + 1.5;
-                }
-                boyVelocity.y = 0;
-            }
-    }}}
+
+
+
+
+        if ((boy_r.left < box_r.left + box_r.width)&&(boy_r.left >= box_r.left + box_r.width - boySpeed) && ((boy_r.top >= box_r.top && boy_r.top <= (box_r.top + box_r.height)) || (boy_r.top + boy_r.height >= box_r.top && boy_r.top + boy_r.height <= box_r.top + box_r.height))){
+            boyPosition.x = box_r.left + box_r.width;
+            boyVelocity.x = 0;
+        }
+        if ((boy_r.left + boy_r.width > box_r.left )&&(boy_r.left + boy_r.width <= box_r.left + boySpeed) && ((boy_r.top >= box_r.top && boy_r.top <= (box_r.top + box_r.height)) || (boy_r.top + boy_r.height >= box_r.top && boy_r.top + boy_r.height <= box_r.top + box_r.height))){
+            boyPosition.x = box_r.left - boy_r.width;
+            boyVelocity.x = 0;
+        }
+
+        if (boy_r.top == box_r.top + box_r.height
+            && boy_r.left == box_r.left
+            && boy_r.left + boy_r.width == box_r.left + box_r.width){
+            boyVelocity.y = 0;
+        }
+        if (boy_r.top + boy_r.height == box_r.top
+            && boy_r.left == box_r.left
+            && boy_r.left + boy_r.width == box_r.left + box_r.width){
+            boyVelocity.y = 0;
+        }
+
+
+    }
+
+}
 
 
 void Boy::update() {
