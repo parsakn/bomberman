@@ -105,23 +105,31 @@ void Boy::checkBounds() {
 
 
         if ((boy_r.left < box_r.left + box_r.width)&&(boy_r.left >= box_r.left + box_r.width - boySpeed) && ((boy_r.top >= box_r.top && boy_r.top <= (box_r.top + box_r.height)) || (boy_r.top + boy_r.height >= box_r.top && boy_r.top + boy_r.height <= box_r.top + box_r.height))){
-            boyPosition.x = box_r.left + box_r.width;
-            boyVelocity.x = 0;
+           if(!(box_r.top == boy_r.top + boy_r.height || box_r.top + box_r.height == boy_r.top)) {
+               boyPosition.x = box_r.left + box_r.width;
+               boyVelocity.x = 0;
+           }
         }
         if ((boy_r.left + boy_r.width > box_r.left )&&(boy_r.left + boy_r.width <= box_r.left + boySpeed) && ((boy_r.top >= box_r.top && boy_r.top <= (box_r.top + box_r.height)) || (boy_r.top + boy_r.height >= box_r.top && boy_r.top + boy_r.height <= box_r.top + box_r.height))){
-            boyPosition.x = box_r.left - boy_r.width;
-            boyVelocity.x = 0;
+            if (!(box_r.top == boy_r.top + boy_r.height || box_r.top + box_r.height == boy_r.top)) {
+                boyPosition.x = box_r.left - boy_r.width;
+                boyVelocity.x = 0;
+            }
         }
 
-        if (boy_r.top == box_r.top + box_r.height
-            && boy_r.left == box_r.left
-            && boy_r.left + boy_r.width == box_r.left + box_r.width){
-            boyVelocity.y = 0;
+        //(((boy_r.left <= box_r.left + box_r.width) && (boy_r.left + boy_r.width >= box_r.left)) || ((boy_r.left + boy_r.width <= box_r.left + box_r.width)&&(boy_r.left + boy_r.width >= box_r.left )))
+
+        if ((boy_r.top + boy_r.height > box_r.top) && (boy_r.top + boy_r.height <= box_r.top + boySpeed) && (((boy_r.left <= box_r.left + box_r.width) && (boy_r.left + boy_r.width >= box_r.left)) || ((boy_r.left + boy_r.width <= box_r.left + box_r.width)&&(boy_r.left + boy_r.width >= box_r.left )))){
+            if (!(box_r.left == boy_r.left + boy_r.width || box_r.left + box_r.width == boy_r.left)) {
+                boyPosition.y = box_r.top - boy_r.height;
+                boyVelocity.y = 0;
+            }
         }
-        if (boy_r.top + boy_r.height == box_r.top
-            && boy_r.left == box_r.left
-            && boy_r.left + boy_r.width == box_r.left + box_r.width){
-            boyVelocity.y = 0;
+        if ((boy_r.top < box_r.top + box_r.height) && (boy_r.top >= box_r.top + box_r.height - boySpeed) && (((boy_r.left <= box_r.left + box_r.width) && (boy_r.left + boy_r.width >= box_r.left)) || ((boy_r.left + boy_r.width <= box_r.left + box_r.width)&&(boy_r.left + boy_r.width >= box_r.left )))){
+            if (!(box_r.left == boy_r.left + boy_r.width || box_r.left + box_r.width == boy_r.left)) {
+                boyPosition.y = box_r.top + box_r.height;
+                boyVelocity.y = 0;
+            }
         }
 
 
